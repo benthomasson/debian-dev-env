@@ -1,0 +1,40 @@
+# Sets up Vim as a Python IDE
+# run using: ansible-playbook -i "localhost," -c local vim.yml
+---
+- hosts: all
+  gather_facts: False
+  tasks:
+    # Ensure Directories
+    - name: .vim
+      file: path=~/.vim state=directory
+    - name: .vim/bundle
+      file: path=~/.vim/bundle state=directory
+    - name: .vim/autoload
+      file: path=~/.vim/autoload state=directory
+    - name: .vim/indent
+      file: path=~/.vim/indent state=directory
+    # Set up vimrc
+    - name: .vimrc
+      file: path=~/.vimrc state=link src={{playbook_dir}}/vimrc
+    # Install plugins
+    - get_url: url=https://tpo.pe/pathogen.vim dest=~/.vim/autoload/pathogen.vim force=no
+    - git: repo=https://github.com/scrooloose/nerdtree.git dest=~/.vim/bundle/nerdtree update=no
+    - git: repo=https://github.com/majutsushi/tagbar.git dest=~/.vim/bundle/tagbar update=no
+    - git: repo=https://github.com/tomtom/tlib_vim.git dest=~/.vim/bundle/tlib_vim update=no
+    - git: repo=https://github.com/MarcWeber/vim-addon-mw-utils.git dest=~/.vim/bundle/vim-addon-mw-utils update=no
+    - git: repo=https://github.com/nvie/vim-flake8.git dest=~/.vim/bundle/vim-flake8 update=no
+    - git: repo=https://github.com/garbas/vim-snipmate.git dest=~/.vim/bundle/vim-snipmate update=no
+    - git: repo=https://github.com/honza/vim-snippets.git dest=~/.vim/bundle/vim-snippets update=no
+    - git: repo=https://github.com/jeetsukumaran/vim-buffergator.git dest=~/.vim/bundle/vim-buffergator update=no
+    - git: repo=https://github.com/vim-scripts/increment.vim--Natter.git dest=~/.vim/bundle/increment.vim--Natter/ update=no
+    - git: repo=https://github.com/benthomasson/vim-gitgutter.git dest=~/.vim/bundle/vim-gitgutter/ update=no
+    - git: repo=https://github.com/benthomasson/coveragepy.vim.git dest=~/.vim/bundle/vim-coveragepy/ update=no
+    # Configure plugins
+    - name: python snippets
+      file: path=~/.vim/bundle/vim-snippets/snippets/python.snippets state=link src={{playbook_dir}}/python.snippets force=yes
+    - name: python indent
+      file: path=~/.vim/indent/python.vim state=link src={{playbook_dir}}/vim/indent/python.vim force=yes
+    - name: .config
+      file: path=~/.config state=directory
+    - name: ~/.config/flake8
+      file: path=~/.config/flake8 state=link src={{playbook_dir}}/flake8

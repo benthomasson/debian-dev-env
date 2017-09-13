@@ -1,0 +1,14 @@
+# Sets up Vim as a Python IDE
+# run using: sudo ansible-playbook -i "localhost," -c local package.yml
+---
+- hosts: all
+  tasks:
+  - apt: update_cache=yes
+  - apt: name={{item}}
+    with_items:
+     - git
+     - vim
+     - ctags
+     - screen
+     - mosh
+

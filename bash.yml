@@ -1,0 +1,10 @@
+# Sets up ~/.bash_profile
+# Run using: ansible-playbook -i "localhost," -c local bash.yml
+---
+- hosts: all
+  gather_facts: False
+  tasks:
+    - name: bash profile
+      file: path=~/.bash_profile state=link src={{playbook_dir}}/bash_profile force=yes
+    - name: bash aliases
+      file: path=~/.bash_aliases state=link src={{playbook_dir}}/bash_aliases force=yes
