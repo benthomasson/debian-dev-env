@@ -1,0 +1,4 @@
+[flake8]
+max-line-length = 160
+builtins = fill,textSize,text,textWidth,frameRate,size,mouseX,mouseY,FX2D,background,translate,mouseButton,RIGHT,CONTROL,keyCode,noFill,stroke,strokeWeight,ellipse,line,LEFT,RIGHT,ALT,scale,key,RETURN,ENTER,BACKSPACE,DELETE,CODED,pushMatrix,popMatrix,rotate,atan2,triangle,width,height,frame,selectInput,selectOutput,rect,CENTER,textAlign,noStroke,loadImage,image,clear,arc,BASELINE,noCursor,TOP
+ignore=E402
